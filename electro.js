@@ -5,9 +5,9 @@
 initGameObjects();
 
 function runGame() {
-    drawOntoScreen();
-    handleObjectCollisions();
-    updateObjectPositions();
+  drawOntoScreen();
+  handleObjectCollisions();
+  updateObjectPositions();
 }
 
 window.onload = init;
