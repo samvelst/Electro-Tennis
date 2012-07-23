@@ -11,7 +11,7 @@ function initGameObjects() {
   myComputer = new Rect(540, 208, 4, 64, 0, 5);
   myHuman.points = 0;
   myComputer.points = 0;
-  myComputer.hit = false;
+  myComputer.hasHitBall = false;
   myHuman.hasBall = true;
 }
 
@@ -59,12 +59,11 @@ function updateObjectPositions() {
     myComputer.hasBall = false;
   }
 
-  if (isWithinRangeOfComputer(myBall)) {
+  if (isWithinRangeOfComputer(myBall) && !myComputer.hasHitBall) {
     if (myBall.center <= myComputer.center) {
       myComputer.updateLocation(myComputer.x, 
           myComputer.y - myComputer.ySpeed);
-    }
-    if (myBall.center >= myComputer.center) {
+    } else if (myBall.center >= myComputer.center) {
       myComputer.updateLocation(myComputer.x, 
           myComputer.y + myComputer.ySpeed);
     }
@@ -98,13 +97,13 @@ function handleObjectCollisions() {
     myBall.ySpeed = -myBall.ySpeed;
   }
 
-  if (collisionDetected(myBall, myHuman) && !myHuman.hit) {
+  if (collisionDetected(myBall, myHuman) && !myHuman.hasHitBall) {
     myBall.xSpeed = -myBall.xSpeed;
-    myHuman.hit = true;
-    myComputer.hit = false;
-  } else if (collisionDetected(myBall, myComputer) && !myComputer.hit) {
+    myHuman.hasHitBall = true;
+    myComputer.hasHitBall = false;
+  } else if (collisionDetected(myBall, myComputer) && !myComputer.hasHitBall) {
     myBall.xSpeed = -myBall.xSpeed;
-    myComputer.hit = true;
-    myHuman.hit = false;
+    myComputer.hasHitBall = true;
+    myHuman.hasHitBall = false;
   }
 }
